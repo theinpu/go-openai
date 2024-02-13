@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"strings"
 
-	utils "github.com/sashabaranov/go-openai/internal"
+	utils "github.com/theinpu/go-openai/internal"
 )
 
 // Client is OpenAI GPT-3 API client.
@@ -107,13 +107,13 @@ func (c *Client) newRequest(ctx context.Context, method, url string, setters ...
 }
 
 func (c *Client) sendRequest(req *http.Request, v Response) error {
-	req.Header.Set("Accept", "application/json; charset=utf-8")
+	req.Header.Set("Accept", "application/json")
 
 	// Check whether Content-Type is already set, Upload Files API requires
 	// Content-Type == multipart/form-data
 	contentType := req.Header.Get("Content-Type")
 	if contentType == "" {
-		req.Header.Set("Content-Type", "application/json; charset=utf-8")
+		req.Header.Set("Content-Type", "application/json")
 	}
 
 	res, err := c.config.HTTPClient.Do(req)
